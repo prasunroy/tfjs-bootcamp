@@ -1,8 +1,8 @@
 # TensorFlow.js Bootcamp
-<img align='right' height='100' src='https://github.com/prasunroy/ocr/blob/master/assets/logo.png' />
+<img align='right' height='95' src='https://github.com/prasunroy/tfjs-bootcamp/blob/master/assets/logo.png' />
 
-![badge](https://github.com/prasunroy/ocr/blob/master/assets/badge_1.svg)
-![badge](https://github.com/prasunroy/ocr/blob/master/assets/badge_2.svg)
+![badge](https://github.com/prasunroy/tfjs-bootcamp/blob/master/assets/badge_1.svg)
+![badge](https://github.com/prasunroy/tfjs-bootcamp/blob/master/assets/badge_2.svg)
 
 ## License
 MIT License
