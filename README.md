@@ -1,5 +1,5 @@
 # TensorFlow.js Bootcamp
-<img align='right' height='90' src='https://github.com/prasunroy/tfjs-bootcamp/blob/master/assets/logo.png' />
+<img align='right' height='80' src='https://github.com/prasunroy/tfjs-bootcamp/blob/master/assets/logo.png' />
 
 ![badge](https://github.com/prasunroy/tfjs-bootcamp/blob/master/assets/badge_1.svg)
 ![badge](https://github.com/prasunroy/tfjs-bootcamp/blob/master/assets/badge_2.svg)
