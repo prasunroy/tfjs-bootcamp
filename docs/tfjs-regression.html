@@ -14,6 +14,8 @@ GitHub: https://github.com/prasunroy/tfjs-bootcamp
     <title>Regression | TensorFlow.js Bootcamp</title>
     <link rel="icon" href="assets/favicon.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:900">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.12.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
   </head>
 
   <!-- body -->
@@ -23,6 +25,127 @@ GitHub: https://github.com/prasunroy/tfjs-bootcamp
     </p>
     <p align='center' style="font-family: roboto; font-size: 30px;">
       <a href="index.html" style="text-decoration: none;">Home</a>
+      <br>
+      <br>
+      <input type="button" id="train" value="Train for 100 epochs" style="font-family: roboto; font-size: 20px;">
+      <br>
+      <br>
+      <div class="chart-container" style="position: relative; height: 40vh; width: 80vw;">
+        <canvas id="trainChart"></canvas>
+        <br>
+        <br>
+        <canvas id="validChart"></canvas>
+      </div>
     </p>
+    <script>
+      // training and validation data
+      const xTrain = [1, 3, 5, 7, 9];
+      const yTrain = [2, 6, 10, 14, 18];
+      const xValid = [0, 2, 4, 6, 8];
+      const yValid = [0, 4, 8, 12, 16];
+
+      // define and compile model
+      const model = tf.sequential();
+      model.add(tf.layers.dense({units: 1, inputShape: [1]}));
+      model.add(tf.layers.dense({units: 64, activation: "sigmoid"}));
+      model.add(tf.layers.dense({units: 64, activation: "sigmoid"}));
+      model.add(tf.layers.dense({units: 1}));
+      model.compile({loss: "meanSquaredError", optimizer: tf.train.adam(0.001)});
+
+      // initial approximations
+      var pTrain = model.predict(tf.tensor2d(xTrain, [xTrain.length, 1])).dataSync();
+      var pValid = model.predict(tf.tensor2d(xValid, [xValid.length, 1])).dataSync();
+
+      // plot initial approximations
+      plotCharts(xTrain, yTrain, pTrain, xValid, yValid, pValid);
+
+      // train model
+      document.getElementById("train").onclick = function() {
+
+        model.fit(tf.tensor(xTrain), tf.tensor(yTrain), {epochs: 100}).then(() => {
+
+          // approximations
+          pTrain = model.predict(tf.tensor2d(xTrain, [xTrain.length, 1])).dataSync();
+          pValid = model.predict(tf.tensor2d(xValid, [xValid.length, 1])).dataSync();
+
+          // plot approximations
+          plotCharts(xTrain, yTrain, pTrain, xValid, yValid, pValid);
+        });
+      };
+
+      // plot charts
+      function plotCharts(xTrain, yTrain, pTrain, xValid, yValid, pValid) {
+
+        // get contexts of charts
+        const ctxTrainChart = document.getElementById("trainChart").getContext("2d");
+        const ctxValidChart = document.getElementById("validChart").getContext("2d");
+
+        // plot chart for training
+        const trainChart = new Chart(ctxTrainChart, {
+          type: "line",
+          data: {
+            labels: xTrain,
+            datasets: [{
+              label: "Actual value",
+              data: yTrain,
+              backgroundColor: "rgba(255, 100, 125, 0.2)",
+              borderColor: "rgba(255, 100, 125, 0.2)",
+              borderWidth: 1,
+              fill: true
+            }, {
+              label: "Predicted value",
+              data: pTrain,
+              backgroundColor: "rgba(125, 100, 255, 0.8)",
+              borderColor: "rgba(125, 100, 255, 0.8)",
+              borderWidth: 1,
+              fill: false
+            }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            },
+            events: []
+          }
+        });
+
+        // plot chart for validation
+        const validChart = new Chart(ctxValidChart, {
+          type: "line",
+          data: {
+            labels: xValid,
+            datasets: [{
+              label: "Actual value",
+              data: yValid,
+              backgroundColor: "rgba(255, 100, 125, 0.2)",
+              borderColor: "rgba(255, 100, 125, 0.2)",
+              borderWidth: 1,
+              fill: true
+            }, {
+              label: "Predicted value",
+              data: pValid,
+              backgroundColor: "rgba(125, 100, 255, 0.8)",
+              borderColor: "rgba(125, 100, 255, 0.8)",
+              borderWidth: 1,
+              fill: false
+            }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            },
+            events: []
+          }
+        });
+      }
+    </script>
   </body>
 </html>
