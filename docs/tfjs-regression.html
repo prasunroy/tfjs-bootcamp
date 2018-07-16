@@ -14,35 +14,43 @@ GitHub: https://github.com/prasunroy/tfjs-bootcamp
     <title>Regression | TensorFlow.js Bootcamp</title>
     <link rel="icon" href="assets/favicon.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:900">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.12.0"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
   </head>
 
   <!-- body -->
   <body>
-    <p align='center' style="font-family: roboto; font-size: 40px;">
-      Regression
-    </p>
-    <p align='center' style="font-family: roboto; font-size: 30px;">
-      <a href="index.html" style="text-decoration: none;">Home</a>
-      <br>
-      <br>
-      <input type="button" id="train" value="Train for 100 epochs" style="font-family: roboto; font-size: 20px;">
-      <br>
-      <br>
-      <div class="chart-container" style="position: relative; height: 40vh; width: 80vw;">
-        <canvas id="trainChart"></canvas>
+    <div class="container">
+      <p align='center' style="font-family: roboto; font-size: 40px;">
+        Regression
+      </p>
+      <p align='center' style="font-family: roboto; font-size: 30px;">
+        <a href="index.html" style="text-decoration: none;">Home</a>
         <br>
         <br>
-        <canvas id="validChart"></canvas>
+        <input type="button" id="train" value="Train for 100 epochs" style="font-family: roboto; font-size: 20px;">
+      </p>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-sm-6">
+          <canvas id="trainChart"></canvas>
+        </div>
+        <div class="col-sm-6">
+          <canvas id="validChart"></canvas>
+        </div>
       </div>
-    </p>
+    </div>
     <script>
       // training and validation data
       const xTrain = [1, 3, 5, 7, 9];
-      const yTrain = [2, 6, 10, 14, 18];
+      const yTrain = [1, 9, 25, 49, 81];
       const xValid = [0, 2, 4, 6, 8];
-      const yValid = [0, 4, 8, 12, 16];
+      const yValid = [0, 4, 16, 36, 64];
 
       // define and compile model
       const model = tf.sequential();
@@ -97,11 +105,17 @@ GitHub: https://github.com/prasunroy/tfjs-bootcamp
               data: pTrain,
               backgroundColor: "rgba(125, 100, 255, 0.8)",
               borderColor: "rgba(125, 100, 255, 0.8)",
-              borderWidth: 1,
+              borderWidth: 2,
               fill: false
             }]
           },
           options: {
+            title: {
+              display: true,
+              position: "top",
+              fontSize: 20,
+              text: "Prediction over Training Data"
+            },
             scales: {
               yAxes: [{
                 ticks: {
@@ -130,11 +144,17 @@ GitHub: https://github.com/prasunroy/tfjs-bootcamp
               data: pValid,
               backgroundColor: "rgba(125, 100, 255, 0.8)",
               borderColor: "rgba(125, 100, 255, 0.8)",
-              borderWidth: 1,
+              borderWidth: 2,
               fill: false
             }]
           },
           options: {
+            title: {
+              display: true,
+              position: "top",
+              fontSize: 20,
+              text: "Prediction over Validation Data"
+            },
             scales: {
               yAxes: [{
                 ticks: {
