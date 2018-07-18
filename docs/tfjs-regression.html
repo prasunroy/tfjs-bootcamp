@@ -65,19 +65,23 @@ GitHub: https://github.com/prasunroy/tfjs-bootcamp
       var pValid = model.predict(tf.tensor2d(xValid, [xValid.length, 1])).dataSync();
 
       // plot initial approximations
-      plotCharts(xTrain, yTrain, pTrain, xValid, yValid, pValid);
+      charts = plotCharts(xTrain, yTrain, pTrain, xValid, yValid, pValid);
 
       // train model
       document.getElementById("train").onclick = function() {
 
         model.fit(tf.tensor(xTrain), tf.tensor(yTrain), {epochs: 100}).then(() => {
 
-          // approximations
+          // new approximations
           pTrain = model.predict(tf.tensor2d(xTrain, [xTrain.length, 1])).dataSync();
           pValid = model.predict(tf.tensor2d(xValid, [xValid.length, 1])).dataSync();
 
-          // plot approximations
-          plotCharts(xTrain, yTrain, pTrain, xValid, yValid, pValid);
+          // plot new approximations
+          charts[0].data.datasets[1].data = pTrain;
+          charts[1].data.datasets[1].data = pValid;
+          charts.forEach(chart => {
+            chart.update();
+          });
         });
       };
 
@@ -165,6 +169,8 @@ GitHub: https://github.com/prasunroy/tfjs-bootcamp
             events: []
           }
         });
+
+        return [trainChart, validChart];
       }
     </script>
   </body>
